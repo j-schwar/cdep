@@ -15,7 +15,7 @@ type SourceDependenciesItem struct {
 }
 
 func getIncludeValue(line string) string {
-	re := regexp.MustCompile(`#include\s*[<"](.*)[>"].*`)
+	re := regexp.MustCompile(`#include\s*[<"](.*)[>"]`)
 	match := re.FindStringSubmatch(line)
 	if len(match) != 2 {
 		panic("did not get expected match")
