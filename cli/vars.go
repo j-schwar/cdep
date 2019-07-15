@@ -26,3 +26,6 @@ var UseCount bool
 
 // ShowVersion tells the application to print out the version number.
 var ShowVersion bool
+
+// FindExp is an expression which will be matched against dependencies.
+var FindExp string

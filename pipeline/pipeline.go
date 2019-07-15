@@ -3,7 +3,14 @@ package pipeline
 import (
 	"cdep/cli"
 	"cdep/kernel"
+	"fmt"
+	"os"
 )
+
+func fatalError(msg string) {
+	_, _ = fmt.Fprintln(os.Stderr, msg)
+	os.Exit(1)
+}
 
 // Run builds and executes the pipeline.
 //
@@ -17,7 +24,17 @@ func Run(inputs []string) {
 	}
 	sourceChan := kernel.Open(pathChan)
 	srcDepChan := kernel.FindDependencies(sourceChan)
-	if !cli.DisplayAll {
+
+	if cli.FindExp != "" {
+		if cli.UseMerge {
+			fatalError("'find' and 'm' flags are mutually exclusive")
+		}
+		if cli.UseCount {
+			fatalError("'find' and 'c' flags are mutually exclusive")
+		}
+
+		srcDepChan = kernel.MatchDependencies(srcDepChan)
+	} else if !cli.DisplayAll {
 		srcDepChan = kernel.FilterSourceDependenciesRemoveStdDeps(srcDepChan)
 	}
 

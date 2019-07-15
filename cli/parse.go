@@ -12,6 +12,7 @@ func ParseCommandLineArguments() {
 	flag.BoolVar(&Verbose, "v", false, "Enable verbose logging to stderr")
 	flag.IntVar(&ChannelBufferSize, "buffer-size", 16, "Size of pipeline channel buffers")
 	flag.BoolVar(&ShowVersion, "version", false, "Display version information")
+	flag.StringVar(&FindExp, "find", "", "A regular expression to match dependencies")
 	flag.Parse()
 	InputFiles = flag.Args()
 }
