@@ -3,6 +3,7 @@ package kernel
 import (
 	"cdep/cli"
 	"regexp"
+	"sort"
 	"strings"
 )
 
@@ -40,6 +41,7 @@ func FindDependencies(ch chan SourceItem) chan SourceDependenciesItem {
 			}
 
 			if dependencies != nil {
+				sort.Strings(dependencies)
 				out <- SourceDependenciesItem{item.FilePath, dependencies}
 			}
 		}
