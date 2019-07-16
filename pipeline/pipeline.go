@@ -40,6 +40,9 @@ func Run(inputs []string) {
 
 	if cli.UseMerge || cli.UseCount {
 		depChan := kernel.MergeDependencies(srcDepChan)
+		if cli.ShowDirectoriesOnly {
+			depChan = kernel.ToDirectory(depChan)
+		}
 		if cli.UseCount {
 			countChan := kernel.CountDependencies(depChan)
 			kernel.PrintDependencyCounts(countChan)
@@ -49,6 +52,9 @@ func Run(inputs []string) {
 			kernel.PrintDependencies(depChan)
 		}
 	} else {
+		if cli.ShowDirectoriesOnly {
+			srcDepChan = kernel.SourceToDirectory(srcDepChan)
+		}
 		kernel.PrintSourceDependencies(srcDepChan)
 	}
 }

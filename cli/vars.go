@@ -24,6 +24,10 @@ var UseMerge bool
 // UseCount tells the system to print out the number of references to each dependency.
 var UseCount bool
 
+// ShowDirectoriesOnly tells the system to display the directories of dependencies
+// instead of whole files.
+var ShowDirectoriesOnly bool
+
 // ShowVersion tells the application to print out the version number.
 var ShowVersion bool
 
