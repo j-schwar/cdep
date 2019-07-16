@@ -69,3 +69,15 @@ func PrintDependencyCounts(ch chan DependencyCountItem) {
 	}
 	closeOutputFile(out)
 }
+
+// PrintSourcesOnly writes only source file names to stdout or an output file.
+func PrintSourcesOnly(ch chan SourceDependenciesItem) {
+	out := getOutputFile()
+	for item := range ch {
+		_, err := fmt.Fprintln(out, string(item.FilePath))
+		if err != nil {
+			fatalError(err)
+		}
+	}
+	closeOutputFile(out)
+}

@@ -28,6 +28,9 @@ var UseCount bool
 // instead of whole files.
 var ShowDirectoriesOnly bool
 
+// ListSourcesOnly tells the system to list only the source files and not their dependencies.
+var ListSourcesOnly bool
+
 // ShowVersion tells the application to print out the version number.
 var ShowVersion bool
 

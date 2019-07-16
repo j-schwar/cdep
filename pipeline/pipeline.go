@@ -39,6 +39,10 @@ func Run(inputs []string) {
 	}
 
 	if cli.UseMerge || cli.UseCount {
+		if cli.ListSourcesOnly {
+			fatalError("'l' may not be paired with 'm' or 'c'")
+		}
+
 		depChan := kernel.MergeDependencies(srcDepChan)
 		if cli.ShowDirectoriesOnly {
 			depChan = kernel.ToDirectory(depChan)
@@ -55,6 +59,10 @@ func Run(inputs []string) {
 		if cli.ShowDirectoriesOnly {
 			srcDepChan = kernel.SourceToDirectory(srcDepChan)
 		}
-		kernel.PrintSourceDependencies(srcDepChan)
+		if cli.ListSourcesOnly {
+			kernel.PrintSourcesOnly(srcDepChan)
+		} else {
+			kernel.PrintSourceDependencies(srcDepChan)
+		}
 	}
 }
