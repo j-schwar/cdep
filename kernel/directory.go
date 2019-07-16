@@ -22,9 +22,18 @@ func SourceToDirectory(ch chan SourceDependenciesItem) chan SourceDependenciesIt
 		defer close(out)
 
 		for item := range ch {
+			// Since we don't have a remove duplicate kernel on this path, we will
+			// remove duplicate entries on a source by source basis (i.e., any
+			// duplicate directories within the same source file will be removed).
+			memoizer := map[string]bool{}
+
 			var deps []string
 			for _, dep := range item.Dependencies {
-				deps = append(deps, filepath.Dir(dep))
+				dir := filepath.Dir(dep)
+				if !memoizer[dir] {
+					deps = append(deps, dir)
+					memoizer[dir] = true
+				}
 			}
 			out <- SourceDependenciesItem{item.FilePath, deps}
 		}
